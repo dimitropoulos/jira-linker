@@ -2,7 +2,12 @@
 
 This is a GitHub extension that will automatically link back to your private JIRA instance!
 
+
+![Screenshot_20200226_162934](https://user-images.githubusercontent.com/15232461/75389800-2ddcee80-58b5-11ea-80b2-b573dc3f1891.png)
+
 ## How To Use
+
+![Screenshot_20200226_162752](https://user-images.githubusercontent.com/15232461/75389684-f1a98e00-58b4-11ea-838e-ddf0586fdc50.png)
 
 1. install [Tampermonkey](https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=en)
 1. create a new script via the extension once it's installed
