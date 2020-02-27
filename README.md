@@ -2,8 +2,10 @@
 
 This is a GitHub extension that will automatically link back to your private JIRA instance!
 
+![Screenshot_20200226_195838](https://user-images.githubusercontent.com/15232461/75402283-67702280-58d2-11ea-96db-096681bb692b.png)
+![Screenshot_20200226_200353](https://user-images.githubusercontent.com/15232461/75402553-20cef800-58d3-11ea-9a68-7fc4fe5f5735.png)
 
-![Screenshot_20200226_162934](https://user-images.githubusercontent.com/15232461/75389800-2ddcee80-58b5-11ea-80b2-b573dc3f1891.png)
+The JIRA Linker will linkify anywhere it finds text in GitHub that looks like a JIRA ticket, including the issues overview page, issue descriptions, issue titles, pull requests... basically anywhere!  You can configure the matching patterns during setup.
 
 ## How To Use
 
