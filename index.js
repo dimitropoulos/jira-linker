@@ -50,7 +50,6 @@ Thanks to [jchv](https://github.com/jchv/userscripts/blob/master/github/jira-lin
     const element = document.createElement(tag);
     const mergedAttributes = Object.assign({}, defaultAttributes || {}, attributes || {});
     Object.entries(mergedAttributes).forEach(([qualifiedName, value]) => {
-      console.log({ qualifiedName, value })
       element.setAttribute(qualifiedName, value);
     });
     (children || []).forEach(child => {
