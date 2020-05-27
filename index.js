@@ -35,7 +35,7 @@ Thanks to [jchv](https://github.com/jchv/userscripts/blob/master/github/jira-lin
 (() => {
   //// Configuration
   //////////////////////////////////////////////////////////////////////////////
-  const jiraRootPlaceholder = 'https://xxx.atlassian.net';
+  const jiraRootPlaceholder = 'https://<your_jira>.atlassian.net';
   const jiraRootId = 'jira-root-url';
 
   const jiraProjectsPlaceholder = 'PROJ1 PROJ2 PROJ3';
@@ -106,6 +106,8 @@ Thanks to [jchv](https://github.com/jchv/userscripts/blob/master/github/jira-lin
     ]),
   ]);
 
+  const sanitizeJiraRoot = jiraRoot => jiraRoot.replace(/\/+$/g, '');
+
   const changeSettingsLink = ListItem({ class: 'header-nav-item' }, [
     Anchor({ role: 'menu-item', class: 'dropdown-item' }, [
       Text('JIRA Linker Settings'),
@@ -114,7 +116,8 @@ Thanks to [jchv](https://github.com/jchv/userscripts/blob/master/github/jira-lin
 
   const createLink = ({ projects, jiraRoot }, parent, node) => {
     const { textContent } = node;
-    const issueLink = `<a class="${linkedMarker}" href="${jiraRoot}/browse/$&">$&</a>`;
+    const sanitizedJiraRoot = sanitizeJiraRoot(jiraRoot);
+    const issueLink = `<a class="${linkedMarker}" href="${sanitizedJiraRoot}/browse/$&">$&</a>`;
     for (const project of projects) {
       const regexp = new RegExp(`${project}-\\d+`, 'i');
       if (textContent.search(regexp) === -1) {
