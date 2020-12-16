@@ -110,12 +110,6 @@ Thanks to [jchv](https://github.com/jchv/userscripts/blob/master/github/jira-lin
 
   const sanitizeJiraRoot = jiraRoot => jiraRoot.replace(/\/+$/g, '');
 
-  const changeSettingsLink = ListItem({ class: 'header-nav-item' }, [
-    Anchor({ role: 'menu-item', class: 'dropdown-item' }, [
-      Text('JIRA Linker Settings'),
-    ]),
-  ]);
-
   const createLink = ({ projects, jiraRoot }, parent, node) => {
     const { textContent } = node;
     const sanitizedJiraRoot = sanitizeJiraRoot(jiraRoot);
@@ -187,16 +181,55 @@ Thanks to [jchv](https://github.com/jchv/userscripts/blob/master/github/jira-lin
 
   }
 
+  const addLinkToProfileMenu = () => {
+    const query = document.querySelectorAll('header details.details-overlay');
+    const targetNavItem = query[query.length - 1];
+    if (!targetNavItem) {
+      console.error('JIRA Linker: couldn\'t find profile menu');
+      return;
+    }
+
+    const changeSettingsLink = ListItem({ class: 'header-nav-item' }, [
+      Anchor({ role: 'menu-item', class: 'dropdown-item' }, [
+        Text('JIRA Linker Settings'),
+      ]),
+    ]);
+
+    const addedChangeSettingsLink = false;
+    const observer = new MutationObserver(mutations => {
+      if (addedChangeSettingsLink) {
+        return;
+      }
+
+      mutations.forEach(mutation => {
+        if (mutation.attributeName === 'open') {
+          setTimeout(() => {
+            const detailsMenuSignoutItem = document.querySelector('header details.details-overlay form.logout-form');
+            if (detailsMenuSignoutItem) {
+              detailsMenuSignoutItem.prepend(changeSettingsLink);
+            } else {
+              console.error('JIRA Linker: Unable to find details-menu');
+            }
+          }, 100);
+        }
+      })
+    });
+
+    observer.observe(targetNavItem, { attributes: true });
+
+    changeSettingsLink.onclick = event => {
+      event.preventDefault();
+      showSettingsModal();
+    }
+  }
+
+
   const start = () => {
     linkifyRoot();
     const observer = new MutationObserver(linkifyRoot);
     observer.observe(document.body, { childList: true, subtree: true });
-  }
 
-  document.querySelector('details-menu > form.logout-form').prepend(changeSettingsLink)
-  changeSettingsLink.onclick = event => {
-    event.preventDefault();
-    showSettingsModal();
+    addLinkToProfileMenu()
   }
 
   if (localStorage.getItem(localStorageKey) === null) {
